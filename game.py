@@ -1,12 +1,14 @@
 import turtle
 
-from helpers.key_helper import key_collision, create_key, init_key_helper
-from state.game_state import SCREEN_WIDTH, SCREEN_HEIGHT, CLOUD_HEIGHT, FLOOR_HEIGHT, LEFT_SCREEN_WALL_WIDTH, \
-    LEFT_SCREEN_WALL_X
-from state.player_state import plr_state
 from helpers.blocks_helper import create_blocks
+from helpers.key_helper import create_key, init_key_helper, key_collision
 from helpers.movement_helper import move, player_spawn
-from helpers.shoot_helper import draw_bullets, shoot, BULLET_VELOCITY, init_shoot_helper
+from helpers.shoot_helper import (BULLET_VELOCITY, draw_bullets,
+                                  init_shoot_helper, shoot)
+from state.game_state import (CLOUD_HEIGHT, FLOOR_HEIGHT,
+                              LEFT_SCREEN_WALL_WIDTH, LEFT_SCREEN_WALL_X,
+                              SCREEN_HEIGHT, SCREEN_WIDTH)
+from state.player_state import plr_state
 
 # Global variables ----------------------------
 t = None
@@ -52,10 +54,10 @@ def draw():
     # s.bgpic('images/winter_bg.gif')
 
     # plr.goto(200, 0)
-    hearts.goto(-170, SCREEN_HEIGHT/2 - 50)
+    hearts.goto(-170, SCREEN_HEIGHT / 2 - 50)
     hearts.shape('images/full_hearts.gif')
 
-    doors.goto(SCREEN_WIDTH/2 - 40, 190)
+    doors.goto(SCREEN_WIDTH / 2 - 40, 190)
     doors.shape('images/door_locked.gif')
 
     plr.shape('images/plr.gif')
@@ -123,12 +125,17 @@ def move_player_1():
     global velocity
     velocity += GRAVITY
 
-    is_collide = move({
-        'center_x': plr.xcor(),
-        'center_y': plr.ycor(),
-        'dx': 0,
-        'dy': -velocity,
-    }, blocks_good_plr, plr, game_props)
+    is_collide = move(
+        {
+            'center_x': plr.xcor(),
+            'center_y': plr.ycor(),
+            'dx': 0,
+            'dy': -velocity,
+        },
+        blocks_good_plr,
+        plr,
+        game_props,
+    )
 
     if is_collide:
         velocity = -velocity * VELOCITY_JUMP
@@ -151,11 +158,16 @@ def move_evil_player():
         move(movement, blocks_evil_plr, sec_plr, game_props)
 
     if keys_pressed['z']:
-        shoot({
-            'x': sec_plr.xcor(),
-            'y': sec_plr.ycor(),
-            'velocity': BULLET_VELOCITY,
-        }, blocks_good_plr, plr)
+        shoot(
+            {
+                'x': sec_plr.xcor(),
+                'y': sec_plr.ycor(),
+                'velocity': BULLET_VELOCITY,
+            },
+            blocks_good_plr,
+            plr,
+        )
+
 
 def check_hearts():
     s.addshape('images/half_hearts.gif')
@@ -169,11 +181,13 @@ def check_hearts():
     elif plr_state['player_lives'] == 0:
         hearts.shape('images/no_hearts.gif')
 
+
 def check_doors():
     s.addshape('images/door.gif')
     if plr_state['keys_collected'] == 1:
         doors.shape('images/door.gif')
         plr_state['door_unlocked'] += 1
+
 
 def game_loop():
     check_hearts()
@@ -216,12 +230,10 @@ def init_globals():
         'Down': False,
         'w': False,
         's': False,
-        'z': False
+        'z': False,
     }
 
-    game_props = {
-        'IsEnd': False
-    }
+    game_props = {'IsEnd': False}
 
     # block centers -----------------------
     blocks_good_plr = [
@@ -235,7 +247,7 @@ def init_globals():
             'color': 'grey',
             'bullet_not_wall': True,
             'bad_block': False,
-            'exit_block': False
+            'exit_block': False,
         },
         {
             'id': 'right_screen_wall',
@@ -247,7 +259,7 @@ def init_globals():
             'color': None,
             'bullet_not_wall': False,
             'bad_block': False,
-            'exit_block': False
+            'exit_block': False,
         },
         {
             'id': 'top_screen_wall',
@@ -259,7 +271,7 @@ def init_globals():
             'color': None,
             'bullet_not_wall': False,
             'bad_block': False,
-            'exit_block': False
+            'exit_block': False,
         },
         {
             'id': 'bot_screen_wall',
@@ -271,7 +283,7 @@ def init_globals():
             'color': None,
             'bullet_not_wall': False,
             'bad_block': False,
-            'exit_block': False
+            'exit_block': False,
         },
         {
             'id': 'floor',
@@ -283,7 +295,7 @@ def init_globals():
             'color': None,
             'bullet_not_wall': False,
             'bad_block': True,
-            'exit_block': False
+            'exit_block': False,
         },
         {
             'id': 'cloud',
@@ -295,7 +307,7 @@ def init_globals():
             'color': None,
             'bullet_not_wall': False,
             'bad_block': False,
-            'exit_block': False
+            'exit_block': False,
         },
         {
             'id': 'rect1',
@@ -307,7 +319,7 @@ def init_globals():
             'color': None,
             'bullet_not_wall': False,
             'bad_block': False,
-            'exit_block': False
+            'exit_block': False,
         },
         {
             'id': 'rect2',
@@ -319,11 +331,11 @@ def init_globals():
             'color': None,
             'bullet_not_wall': False,
             'bad_block': False,
-            'exit_block': False
+            'exit_block': False,
         },
         {
             'id': 'rect3',
-            'center_x': SCREEN_WIDTH/2,
+            'center_x': SCREEN_WIDTH / 2,
             'center_y': 100,
             'width': 194,
             'height': 62,
@@ -331,8 +343,8 @@ def init_globals():
             'color': None,
             'bullet_not_wall': False,
             'bad_block': False,
-            'exit_block': True
-        }
+            'exit_block': True,
+        },
     ]
 
     blocks_evil_plr = [
@@ -344,7 +356,7 @@ def init_globals():
             'height': 1,
             'img': None,
             'color': None,
-            'bad_block': False
+            'bad_block': False,
         },
         {
             'id': 'bot_screen_wall',
@@ -354,8 +366,8 @@ def init_globals():
             'height': 1,
             'img': None,
             'color': None,
-            'bad_block': False
-        }
+            'bad_block': False,
+        },
     ]
 
     keys = [
@@ -369,7 +381,7 @@ def init_globals():
             'color': None,
             'bullet_not_wall': False,
             'bad_block': False,
-            'is_blank': False
+            'is_blank': False,
         },
     ]
 

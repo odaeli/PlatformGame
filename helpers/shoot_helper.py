@@ -42,14 +42,14 @@ def draw_bullets(blocks, plr):
 
     for bull in bullets:
         if is_rect_collide(
-                bull['x'],
-                bull['y'],
-                BULLET_WIDTH,
-                BULLET_HEIGHT,
-                player_left,
-                player_top,
-                plr_state['PLAYER_WIDTH'],
-                plr_state['PLAYER_HEIGHT']
+            bull['x'],
+            bull['y'],
+            BULLET_WIDTH,
+            BULLET_HEIGHT,
+            player_left,
+            player_top,
+            plr_state['PLAYER_WIDTH'],
+            plr_state['PLAYER_HEIGHT'],
         ):
             bullets.remove(bull)
             plr_state['player_lives'] -= 1
@@ -66,14 +66,14 @@ def draw_bullets(blocks, plr):
             block_height = block['height']
 
             if is_rect_collide(
-                    bull['x'],
-                    bull['y'],
-                    BULLET_WIDTH,
-                    BULLET_HEIGHT,
-                    block_left,
-                    block_top,
-                    block_width,
-                    block_height
+                bull['x'],
+                bull['y'],
+                BULLET_WIDTH,
+                BULLET_HEIGHT,
+                block_left,
+                block_top,
+                block_width,
+                block_height,
             ):
                 bullets.remove(bull)
                 break

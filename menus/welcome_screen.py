@@ -1,7 +1,7 @@
-from turtle import Screen
-from tkinter import *
 import turtle
 from random import randint
+from tkinter import *
+from turtle import Screen
 
 play_button_clicked = False
 
@@ -42,7 +42,13 @@ def display_welcome_screen():
     turtle.hideturtle()
 
     canvas = welcome_screen.getcanvas()
-    button = Button(canvas.master, text="PLAY", command=handle_play_button, font=("Ariel", 30), bg="white")
+    button = Button(
+        canvas.master,
+        text="PLAY",
+        command=handle_play_button,
+        font=("Ariel", 30),
+        bg="white",
+    )
 
     button.pack()
     button.place(relx=0.5, rely=0.5, anchor="center")

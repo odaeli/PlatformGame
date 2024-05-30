@@ -1,7 +1,6 @@
-from menus.welcome_screen import display_welcome_screen
-from menus.name_selection_screen import display_name_selection
-
 from game import start_game
+from menus.name_selection_screen import display_name_selection
+from menus.welcome_screen import display_welcome_screen
 
 
 def main():

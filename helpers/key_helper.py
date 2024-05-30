@@ -1,7 +1,8 @@
+import turtle
+
 from helpers.blocks_helper import create_blocks
 from helpers.movement_helper import is_rect_collide
 from state.player_state import plr_state
-import turtle
 
 keys_creator = None
 
@@ -33,14 +34,14 @@ def key_collision(plr, keys):
             player_top = plr.ycor() - (plr_state['PLAYER_HEIGHT'] / 2)
 
             if is_rect_collide(
-                    key_left,
-                    key_top,
-                    key_width,
-                    key_height,
-                    player_left,
-                    player_top,
-                    plr_state['PLAYER_WIDTH'],
-                    plr_state['PLAYER_HEIGHT']
+                key_left,
+                key_top,
+                key_width,
+                key_height,
+                player_left,
+                player_top,
+                plr_state['PLAYER_WIDTH'],
+                plr_state['PLAYER_HEIGHT'],
             ):
                 keys_creator.shape('blank')
                 key['is_blank'] = True

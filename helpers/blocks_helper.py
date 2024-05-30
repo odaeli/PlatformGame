@@ -1,5 +1,6 @@
 import turtle
 
+
 # draw image from center
 def create_block(x, y, picture):
     turtle_block = turtle.Turtle()
@@ -22,9 +23,9 @@ def draw_rectangle_from_center(t, center_x, center_y, width, height, color):
     # Draw the rectangle
     for _ in range(2):
         t.forward(width)  # Move forward by the width of the rectangle
-        t.right(90)       # Turn right 90 degrees
-        t.forward(height) # Move forward by the height of the rectangle
-        t.right(90)       # Turn right 90 degrees
+        t.right(90)  # Turn right 90 degrees
+        t.forward(height)  # Move forward by the height of the rectangle
+        t.right(90)  # Turn right 90 degrees
 
     t.end_fill()  # Complete the fill of the rectangle
 
@@ -41,5 +42,5 @@ def create_blocks(t, blocks):
                 block['center_y'],
                 block['width'],
                 block['height'],
-                block['color']
+                block['color'],
             )

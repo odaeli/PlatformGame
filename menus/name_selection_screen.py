@@ -9,7 +9,9 @@ def create_player1_input(window):
     frame = tk.Frame(window, name="player1_frame", bg="black", padx=20, pady=20)
     frame.pack(side=tk.LEFT)
 
-    label = tk.Label(frame, text="Player 1 Name:", fg="white", bg="black", font=("Arial", 20))
+    label = tk.Label(
+        frame, text="Player 1 Name:", fg="white", bg="black", font=("Arial", 20)
+    )
     label.pack()
 
     entry = tk.Entry(frame, name='player1_entry', font=("Arial", 16))
@@ -23,7 +25,9 @@ def create_player2_input(window):
     frame = tk.Frame(window, name="player2_frame", bg="black", padx=20, pady=20)
     frame.pack(side=tk.RIGHT)
 
-    label = tk.Label(frame, text="Player 2 Name:", fg="white", bg="black", font=("Arial", 20))
+    label = tk.Label(
+        frame, text="Player 2 Name:", fg="white", bg="black", font=("Arial", 20)
+    )
     label.pack()
 
     entry = tk.Entry(frame, name='player2_entry', font=("Arial", 16))
@@ -34,8 +38,15 @@ def create_player2_input(window):
 
 
 def create_continue_button(window):
-    button = tk.Button(window, text="CONTINUE", command=lambda: handle_continue_button(window), font=("Arial", 20),
-                       bg="white", padx=10, pady=5)
+    button = tk.Button(
+        window,
+        text="CONTINUE",
+        command=lambda: handle_continue_button(window),
+        font=("Arial", 20),
+        bg="white",
+        padx=10,
+        pady=5,
+    )
     button.pack()
     button.place(relx=0.5, rely=0.5, anchor="center")
 

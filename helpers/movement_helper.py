@@ -1,4 +1,4 @@
-from state.player_state import plr_state, PLAYER_SPAWN_POINT
+from state.player_state import PLAYER_SPAWN_POINT, plr_state
 
 
 def player_spawn(plr):
@@ -6,10 +6,7 @@ def player_spawn(plr):
 
 
 def is_rect_collide(x1, y1, w1, h1, x2, y2, w2, h2):
-    return ((x1 <= x2 + w2) and
-            (x1 + w1 >= x2) and
-            (y1 <= y2 + h2) and
-            y1 + h1 >= y2)
+    return (x1 <= x2 + w2) and (x1 + w1 >= x2) and (y1 <= y2 + h2) and y1 + h1 >= y2
 
 
 def move(movement, blocks, plr, game_props):
@@ -20,19 +17,22 @@ def move(movement, blocks, plr, game_props):
         block_width = block['width']
         block_height = block['height']
 
-        player_left = movement['center_x'] + movement['dx'] - (plr_state['PLAYER_WIDTH'] / 2)
-        player_top = movement['center_y'] + movement['dy'] - (plr_state['PLAYER_HEIGHT'] / 2)
+        player_left = (
+            movement['center_x'] + movement['dx'] - (plr_state['PLAYER_WIDTH'] / 2)
+        )
+        player_top = (
+            movement['center_y'] + movement['dy'] - (plr_state['PLAYER_HEIGHT'] / 2)
+        )
 
         if is_rect_collide(
-                block_left,
-                block_top,
-                block_width,
-                block_height,
-
-                player_left,
-                player_top,
-                plr_state['PLAYER_WIDTH'],
-                plr_state['PLAYER_HEIGHT']
+            block_left,
+            block_top,
+            block_width,
+            block_height,
+            player_left,
+            player_top,
+            plr_state['PLAYER_WIDTH'],
+            plr_state['PLAYER_HEIGHT'],
         ):
             is_collide = True
 
