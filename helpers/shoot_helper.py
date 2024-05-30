@@ -3,15 +3,19 @@ import turtle
 from helpers.movement_helper import is_rect_collide, player_spawn
 from state.player_state import plr_state
 
-create_block = turtle.Turtle()
-create_block.penup()
-create_block.hideturtle()
-
+create_block = None
 BULLET_WIDTH = 20
 BULLET_HEIGHT = 10
 BULLET_VELOCITY = 20
 
 bullets = []
+
+
+def init_shoot_helper():
+    global create_block
+    create_block = turtle.Turtle()
+    create_block.penup()
+    create_block.hideturtle()
 
 
 def create_rectangle(bull):

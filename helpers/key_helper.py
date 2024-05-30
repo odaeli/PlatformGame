@@ -3,7 +3,12 @@ from helpers.movement_helper import is_rect_collide
 from state.player_state import plr_state
 import turtle
 
-keys_creator = turtle.Turtle()
+keys_creator = None
+
+
+def init_key_helper():
+    global keys_creator
+    keys_creator = turtle.Turtle()
 
 
 def create_key(keys):

@@ -1,12 +1,12 @@
 import turtle
 
-from helpers.key_helper import key_collision, create_key
+from helpers.key_helper import key_collision, create_key, init_key_helper
 from state.game_state import SCREEN_WIDTH, SCREEN_HEIGHT, CLOUD_HEIGHT, FLOOR_HEIGHT, LEFT_SCREEN_WALL_WIDTH, \
     LEFT_SCREEN_WALL_X
 from state.player_state import plr_state
 from helpers.blocks_helper import create_blocks
 from helpers.movement_helper import move, player_spawn
-from helpers.shoot_helper import draw_bullets, shoot, BULLET_VELOCITY
+from helpers.shoot_helper import draw_bullets, shoot, BULLET_VELOCITY, init_shoot_helper
 
 # Global variables ----------------------------
 t = None
@@ -196,6 +196,8 @@ def game_loop():
 
 def init_globals():
     global t, s, hearts, doors, plr, sec_plr, keys_pressed, game_props, blocks_good_plr, blocks_evil_plr, keys
+    turtle.TurtleScreen._RUNNING = True
+
     t = turtle.Turtle()
     s = turtle.Screen()
 
@@ -374,6 +376,8 @@ def init_globals():
 
 def init():
     init_globals()
+    init_shoot_helper()
+    init_key_helper()
 
     #  lift the "pen" off the drawing canvas
     #  so that moving the turtle does not draw lines.
