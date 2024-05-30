@@ -1,5 +1,5 @@
-from welcome_screen import display_welcome_screen
-from name_selection_screen import display_name_selection
+from menus.welcome_screen import display_welcome_screen
+from menus.name_selection_screen import display_name_selection
 
 
 def main():
