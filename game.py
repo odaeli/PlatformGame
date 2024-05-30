@@ -11,6 +11,8 @@ from helpers.shoot_helper import draw_bullets, shoot, BULLET_VELOCITY
 # Global variables ----------------------------
 t = None
 s = None
+hearts = None
+doors = None
 plr = None
 sec_plr = None
 
@@ -21,6 +23,8 @@ VELOCITY_JUMP = 0.2
 velocity = 0
 
 keys_pressed = None
+
+game_props = None
 
 # block centers -----------------------
 blocks_good_plr = None
@@ -42,10 +46,18 @@ def draw():
     s.addshape('images/winter_bg.gif')
     s.addshape('images/evil_circle2.gif')
     s.addshape('images/key.gif')
+    s.addshape('images/full_hearts.gif')
+    s.addshape('images/door_locked.gif')
 
     # s.bgpic('images/winter_bg.gif')
 
     # plr.goto(200, 0)
+    hearts.goto(-170, SCREEN_HEIGHT/2 - 50)
+    hearts.shape('images/full_hearts.gif')
+
+    doors.goto(SCREEN_WIDTH/2 - 40, 190)
+    doors.shape('images/door_locked.gif')
+
     plr.shape('images/plr.gif')
     player_spawn(plr)
 
@@ -94,19 +106,19 @@ def move_player_1():
 
     if keys_pressed['Left']:
         movement['dx'] = -ANIMATION_STEP
-        move(movement, blocks_good_plr, plr)
+        move(movement, blocks_good_plr, plr, game_props)
 
     if keys_pressed['Right']:
         movement['dx'] = ANIMATION_STEP
-        move(movement, blocks_good_plr, plr)
+        move(movement, blocks_good_plr, plr, game_props)
 
     if keys_pressed['Down']:
         movement['dy'] = -ANIMATION_STEP
-        move(movement, blocks_good_plr, plr)
+        move(movement, blocks_good_plr, plr, game_props)
 
     if keys_pressed['Up']:
         movement['dy'] = ANIMATION_STEP
-        move(movement, blocks_good_plr, plr)
+        move(movement, blocks_good_plr, plr, game_props)
 
     global velocity
     velocity += GRAVITY
@@ -116,7 +128,7 @@ def move_player_1():
         'center_y': plr.ycor(),
         'dx': 0,
         'dy': -velocity,
-    }, blocks_good_plr, plr)
+    }, blocks_good_plr, plr, game_props)
 
     if is_collide:
         velocity = -velocity * VELOCITY_JUMP
@@ -132,11 +144,11 @@ def move_evil_player():
 
     if keys_pressed['w']:
         movement['dy'] = ANIMATION_STEP
-        move(movement, blocks_evil_plr, sec_plr)
+        move(movement, blocks_evil_plr, sec_plr, game_props)
 
     if keys_pressed['s']:
         movement['dy'] = -ANIMATION_STEP
-        move(movement, blocks_evil_plr, sec_plr)
+        move(movement, blocks_evil_plr, sec_plr, game_props)
 
     if keys_pressed['z']:
         shoot({
@@ -145,25 +157,50 @@ def move_evil_player():
             'velocity': BULLET_VELOCITY,
         }, blocks_good_plr, plr)
 
+def check_hearts():
+    s.addshape('images/half_hearts.gif')
+    s.addshape('images/almost_no_hearts.gif')
+    s.addshape('images/no_hearts.gif')
+
+    if plr_state['player_lives'] == 2:
+        hearts.shape('images/half_hearts.gif')
+    elif plr_state['player_lives'] == 1:
+        hearts.shape('images/almost_no_hearts.gif')
+    elif plr_state['player_lives'] == 0:
+        hearts.shape('images/no_hearts.gif')
+
+def check_doors():
+    s.addshape('images/door.gif')
+    if plr_state['keys_collected'] == 1:
+        doors.shape('images/door.gif')
+        plr_state['door_unlocked'] += 1
 
 def game_loop():
+    check_hearts()
+    check_doors()
+    won = False
+
     if plr_state['player_lives'] != 0:
-        if plr_state['keys_collected'] != 1:
-            move_player_1()
-            move_evil_player()
-            draw_bullets(blocks_good_plr, plr)
-            key_collision(plr, keys)
+
+        move_player_1()
+        move_evil_player()
+        draw_bullets(blocks_good_plr, plr)
+        key_collision(plr, keys)
+
+        if not game_props['IsEnd']:
             s.ontimer(game_loop, 5)
-        else:
-            print("YOU WON!")
+
     else:
         print("GAME OVER")
 
 
 def init_globals():
-    global t, s, plr, sec_plr, keys_pressed, blocks_good_plr, blocks_evil_plr, keys
+    global t, s, hearts, doors, plr, sec_plr, keys_pressed, game_props, blocks_good_plr, blocks_evil_plr, keys
     t = turtle.Turtle()
     s = turtle.Screen()
+
+    hearts = turtle.Turtle()
+    doors = turtle.Turtle()
 
     plr = turtle.Turtle()
     sec_plr = turtle.Turtle()
@@ -180,73 +217,83 @@ def init_globals():
         'z': False
     }
 
+    game_props = {
+        'IsEnd': False
+    }
+
     # block centers -----------------------
     blocks_good_plr = [
         {
             'id': 'left_screen_wall',
-            'center_x': -s.window_width() / 2 + LEFT_SCREEN_WALL_X,
+            'center_x': -SCREEN_WIDTH / 2 + LEFT_SCREEN_WALL_X,
             'center_y': 0,
             'width': LEFT_SCREEN_WALL_WIDTH,
-            'height': s.window_height(),
+            'height': SCREEN_HEIGHT,
             'img': None,
             'color': 'grey',
             'bullet_not_wall': True,
-            'bad_block': False
+            'bad_block': False,
+            'exit_block': False
         },
         {
             'id': 'right_screen_wall',
-            'center_x': s.window_width() / 2 + 1,
+            'center_x': SCREEN_WIDTH / 2 + 1,
             'center_y': 0,
             'width': 1,
-            'height': s.window_height(),
+            'height': SCREEN_HEIGHT,
             'img': None,
             'color': None,
             'bullet_not_wall': False,
-            'bad_block': False
+            'bad_block': False,
+            'exit_block': False
         },
         {
             'id': 'top_screen_wall',
             'center_x': 0,
-            'center_y': -s.window_height() / 2 - 1,
-            'width': s.window_width(),
+            'center_y': -SCREEN_HEIGHT / 2 - 1,
+            'width': SCREEN_WIDTH,
             'height': 1,
             'img': None,
             'color': None,
             'bullet_not_wall': False,
-            'bad_block': False
+            'bad_block': False,
+            'exit_block': False
         },
         {
             'id': 'bot_screen_wall',
             'center_x': 0,
-            'center_y': s.window_height() / 2 + 1,
-            'width': s.window_width(),
+            'center_y': SCREEN_HEIGHT / 2 + 1,
+            'width': SCREEN_WIDTH,
             'height': 1,
             'img': None,
             'color': None,
             'bullet_not_wall': False,
-            'bad_block': False
+            'bad_block': False,
+            'exit_block': False
         },
         {
             'id': 'floor',
             'center_x': 124,
-            'center_y': -s.window_height() / 2,
+            'center_y': -SCREEN_HEIGHT / 2,
             'width': 800,
             'height': FLOOR_HEIGHT,
             'img': 'images/floor.gif',
             'color': None,
             'bullet_not_wall': False,
-            'bad_block': True
+            'bad_block': True,
+            'exit_block': False
         },
         {
             'id': 'cloud',
             'center_x': -215,
-            'center_y': -s.window_height() / 2 + 54,
+            'center_y': -SCREEN_HEIGHT / 2 + 54,
             'width': 126,
             'height': CLOUD_HEIGHT,
             'img': 'images/cloud.gif',
             'color': None,
             'bullet_not_wall': False,
-            'bad_block': False
+            'bad_block': False,
+            'exit_block': False
         },
         {
             'id': 'rect1',
@@ -257,7 +304,8 @@ def init_globals():
             'img': 'images/block.gif',
             'color': None,
             'bullet_not_wall': False,
-            'bad_block': False
+            'bad_block': False,
+            'exit_block': False
         },
         {
             'id': 'rect2',
@@ -268,7 +316,20 @@ def init_globals():
             'img': 'images/block.gif',
             'color': None,
             'bullet_not_wall': False,
-            'bad_block': False
+            'bad_block': False,
+            'exit_block': False
+        },
+        {
+            'id': 'rect3',
+            'center_x': SCREEN_WIDTH/2,
+            'center_y': 100,
+            'width': 194,
+            'height': 62,
+            'img': 'images/block.gif',
+            'color': None,
+            'bullet_not_wall': False,
+            'bad_block': False,
+            'exit_block': True
         }
     ]
 
@@ -276,8 +337,8 @@ def init_globals():
         {
             'id': 'top_screen_wall',
             'center_x': 0,
-            'center_y': -s.window_height() / 2 - 1,
-            'width': s.window_width(),
+            'center_y': -SCREEN_HEIGHT / 2 - 1,
+            'width': SCREEN_WIDTH,
             'height': 1,
             'img': None,
             'color': None,
@@ -286,8 +347,8 @@ def init_globals():
         {
             'id': 'bot_screen_wall',
             'center_x': 0,
-            'center_y': s.window_height() / 2 + 1,
-            'width': s.window_width(),
+            'center_y': SCREEN_HEIGHT / 2 + 1,
+            'width': SCREEN_WIDTH,
             'height': 1,
             'img': None,
             'color': None,
@@ -318,6 +379,8 @@ def init():
     #  so that moving the turtle does not draw lines.
     plr.penup()
     sec_plr.penup()
+    hearts.penup()
+    doors.penup()
     t.penup()
 
     # prevent default step-animation on screen load

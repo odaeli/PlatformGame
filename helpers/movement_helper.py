@@ -12,7 +12,7 @@ def is_rect_collide(x1, y1, w1, h1, x2, y2, w2, h2):
             y1 + h1 >= y2)
 
 
-def move(movement, blocks, plr):
+def move(movement, blocks, plr, game_props):
     is_collide = False
     for block in blocks:
         block_left = block['center_x'] - (block['width'] / 2)
@@ -37,8 +37,11 @@ def move(movement, blocks, plr):
             is_collide = True
 
             if block['bad_block']:
-                player_spawn(plr)
                 plr_state['player_lives'] -= 1
+                player_spawn(plr)
+
+            if block['exit_block'] and plr_state['door_unlocked']:
+                game_props['IsEnd'] = True
             break
 
     if not is_collide:

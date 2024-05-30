@@ -5,7 +5,8 @@ plr_state = {
     'player_lives': 3,
     'PLAYER_WIDTH': 63,
     'PLAYER_HEIGHT': 59,
-    'keys_collected': 0
+    'keys_collected': 0,
+    'door_unlocked': 0
 }
 
 PLAYER_SPAWN_POINT = {

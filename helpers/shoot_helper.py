@@ -13,6 +13,7 @@ BULLET_VELOCITY = 20
 
 bullets = []
 
+
 def create_rectangle(bull):
     create_block.goto(bull['x'], bull['y'])
     create_block.setheading(90)
@@ -47,8 +48,8 @@ def draw_bullets(blocks, plr):
                 plr_state['PLAYER_HEIGHT']
         ):
             bullets.remove(bull)
-            player_spawn(plr)
             plr_state['player_lives'] -= 1
+            player_spawn(plr)
             break
 
         for block in reversed(blocks):
