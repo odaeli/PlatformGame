@@ -15,7 +15,9 @@ def main():
     print(f'player1_name = {player1_name}')
     print(f'player2_name = {player2_name}')
 
-    start_game()
+    start_game()  # TODO change start_game to return the winner
+
+    # TODO add winner screen
 
 
 if __name__ == '__main__':
