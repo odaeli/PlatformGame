@@ -14,6 +14,8 @@ def main():
     print(f'player1_name = {player1_name}')
     print(f'player2_name = {player2_name}')
 
+    # TODO add game logic
+
 
 if __name__ == '__main__':
     main()
