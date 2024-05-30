@@ -1,6 +1,8 @@
 from menus.welcome_screen import display_welcome_screen
 from menus.name_selection_screen import display_name_selection
 
+from game import start_game
+
 
 def main():
     play_button_clicked = display_welcome_screen()
@@ -14,7 +16,7 @@ def main():
     print(f'player1_name = {player1_name}')
     print(f'player2_name = {player2_name}')
 
-    # TODO add game logic
+    start_game()
 
 
 if __name__ == '__main__':
