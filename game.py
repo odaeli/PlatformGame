@@ -1,4 +1,5 @@
 import turtle
+from time import sleep
 
 from helpers.blocks_helper import create_blocks
 from helpers.key_helper import create_key, init_key_helper, key_collision
@@ -32,6 +33,8 @@ game_props = None
 blocks_good_plr = None
 blocks_evil_plr = None
 keys = None
+
+winner = None  # 'good' / 'evil'
 
 
 # ---------------------------------------------
@@ -190,22 +193,28 @@ def check_doors():
 
 
 def game_loop():
+    global winner
     check_hearts()
     check_doors()
-    won = False
 
-    if plr_state['player_lives'] != 0:
-
+    if plr_state['player_lives'] == 0 or game_props['IsEnd']:
+        if game_props['IsEnd']:
+            winner = 'good'
+        else:
+            winner = 'evil'
+        end_game()
+    else:
         move_player_1()
         move_evil_player()
         draw_bullets(blocks_good_plr, plr)
         key_collision(plr, keys)
+        s.ontimer(game_loop, 5)
 
-        if not game_props['IsEnd']:
-            s.ontimer(game_loop, 5)
 
-    else:
-        print("GAME OVER")
+def end_game():
+    print('end game')
+    sleep(1)
+    s.bye()
 
 
 def init_globals():
@@ -415,3 +424,4 @@ def init():
 
 def start_game():
     init()
+    return winner
