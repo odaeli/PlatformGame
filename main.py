@@ -1,6 +1,7 @@
 from game import start_game
 from menus.name_selection_screen import display_name_selection
 from menus.welcome_screen import display_welcome_screen
+from menus.winner_screen import display_winner_screen
 
 
 def main():
@@ -21,7 +22,7 @@ def main():
 
     print(f'winner = {winner}')
 
-    # TODO add winner screen
+    display_winner_screen(winner)
 
 
 if __name__ == '__main__':
