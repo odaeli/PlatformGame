@@ -1,15 +1,10 @@
 import turtle
-from random import randint
 from tkinter import *
 from turtle import Screen
 
+from helpers.utils import pick_random_color
+
 play_button_clicked = False
-
-
-def pick_random_color():
-    r, g, b = randint(0, 255), randint(0, 255), randint(0, 255)
-    print(f"r:{r}, g:{g}, b:{b}")
-    return r, g, b
 
 
 def change_title_color(x, y):
