@@ -1,36 +1,36 @@
 import tkinter as tk
 
 continue_button_clicked = False
-player1_name = ''
-player2_name = ''
+good_player_name = ''
+evil_player_name = ''
 
 
-def create_player1_input(window):
-    frame = tk.Frame(window, name="player1_frame", bg="black", padx=20, pady=20)
+def create_good_player_input(window):
+    frame = tk.Frame(window, name="good_player_frame", bg="black", padx=20, pady=20)
     frame.pack(side=tk.LEFT)
 
     label = tk.Label(
-        frame, text="Player 1 Name:", fg="white", bg="black", font=("Arial", 20)
+        frame, text="Good Player Name:", fg="white", bg="black", font=("Arial", 20)
     )
     label.pack()
 
-    entry = tk.Entry(frame, name='player1_entry', font=("Arial", 16))
+    entry = tk.Entry(frame, name='good_player_entry', font=("Arial", 16))
     entry.pack()
 
     name_label = tk.Label(frame, text="", fg="blue", bg="black", font=("Arial", 14))
     name_label.pack()
 
 
-def create_player2_input(window):
-    frame = tk.Frame(window, name="player2_frame", bg="black", padx=20, pady=20)
+def create_evil_player_input(window):
+    frame = tk.Frame(window, name="evil_player_frame", bg="black", padx=20, pady=20)
     frame.pack(side=tk.RIGHT)
 
     label = tk.Label(
-        frame, text="Player 2 Name:", fg="white", bg="black", font=("Arial", 20)
+        frame, text="Evil Player Name:", fg="white", bg="black", font=("Arial", 20)
     )
     label.pack()
 
-    entry = tk.Entry(frame, name='player2_entry', font=("Arial", 16))
+    entry = tk.Entry(frame, name='evil_player_entry', font=("Arial", 16))
     entry.pack()
 
     name_label = tk.Label(frame, text="", fg="blue", bg="black", font=("Arial", 14))
@@ -52,11 +52,11 @@ def create_continue_button(window):
 
 
 def handle_continue_button(window):
-    global continue_button_clicked, player1_name, player2_name
+    global continue_button_clicked, good_player_name, evil_player_name
 
-    player1_name = window.nametowidget('player1_frame.player1_entry').get()
-    player2_name = window.nametowidget('player2_frame.player2_entry').get()
-    if not player1_name or not player2_name:
+    good_player_name = window.nametowidget('good_player_frame.good_player_entry').get()
+    evil_player_name = window.nametowidget('evil_player_frame.evil_player_entry').get()
+    if not good_player_name or not evil_player_name:
         return
 
     continue_button_clicked = True
@@ -73,11 +73,11 @@ def display_name_selection():
 
     window.title("Player Names")
 
-    create_player1_input(window)
-    create_player2_input(window)
+    create_good_player_input(window)
+    create_evil_player_input(window)
 
     create_continue_button(window)
 
     window.mainloop()
 
-    return continue_button_clicked, player1_name, player2_name
+    return continue_button_clicked, good_player_name, evil_player_name

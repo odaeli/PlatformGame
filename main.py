@@ -9,12 +9,12 @@ def main():
     if not play_button_clicked:
         return
 
-    continue_button_clicked, player1_name, player2_name = display_name_selection()
+    continue_button_clicked, good_player_name, evil_player_name = display_name_selection()
     if not continue_button_clicked:
         return
 
-    print(f'player1_name = {player1_name}')
-    print(f'player2_name = {player2_name}')
+    print(f'good_player_name = {good_player_name}')
+    print(f'evil_player_name = {evil_player_name}')
 
     winner = start_game()
     if not winner:
@@ -22,7 +22,10 @@ def main():
 
     print(f'winner = {winner}')
 
-    display_winner_screen(winner)
+    if winner == 'good':
+        display_winner_screen(good_player_name)
+    else:
+        display_winner_screen(evil_player_name)
 
 
 if __name__ == '__main__':
