@@ -7,7 +7,7 @@ from helpers.utils import pick_random_color
 play_button_clicked = False
 
 
-def change_title_color(x, y):
+def change_title_color(x=None, y=None):
     new_text_color = pick_random_color()
     turtle.color(new_text_color)
     turtle.write("PLATFORM GAME", align="center", font=("Impact", 70))
@@ -31,7 +31,7 @@ def display_welcome_screen():
 
     turtle.colormode(255)
 
-    change_title_color(0, 0)
+    change_title_color()
     welcome_screen.onclick(change_title_color)
 
     turtle.hideturtle()
