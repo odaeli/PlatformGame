@@ -7,7 +7,7 @@ evil_player_name = ''
 
 def create_good_player_input(window):
     frame = tk.Frame(window, name="good_player_frame", bg="black", padx=20, pady=20)
-    frame.pack(side=tk.LEFT)
+    frame.pack(side=tk.RIGHT)
 
     label = tk.Label(
         frame, text="Good Player Name:", fg="white", bg="black", font=("Arial", 20)
@@ -23,7 +23,7 @@ def create_good_player_input(window):
 
 def create_evil_player_input(window):
     frame = tk.Frame(window, name="evil_player_frame", bg="black", padx=20, pady=20)
-    frame.pack(side=tk.RIGHT)
+    frame.pack(side=tk.LEFT)
 
     label = tk.Label(
         frame, text="Evil Player Name:", fg="white", bg="black", font=("Arial", 20)
