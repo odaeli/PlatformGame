@@ -366,6 +366,7 @@ def init_globals():
             'img': None,
             'color': None,
             'bad_block': False,
+            'exit_block': False,
         },
         {
             'id': 'bot_screen_wall',
@@ -376,6 +377,7 @@ def init_globals():
             'img': None,
             'color': None,
             'bad_block': False,
+            'exit_block': False,
         },
     ]
 
